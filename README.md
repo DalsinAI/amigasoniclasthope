@@ -19,9 +19,12 @@ repository contains only the reproducible local port recipe and metadata.
 ```sh
 ./scripts/prepare-amiga-port.sh \
   "/path/to/Sonic The Last Hope" \
-  /path/to/amigaopensurge/dist/opensurge \
   ./dist/SonicTLH
 ```
+
+Install the QPAK-enabled shared engine at `DH1:OpenSurgeRC1`, then run the
+prepared port with `Execute DH1:SonicTLH/StartGame`. The engine remains shared
+and its built-in compatibility mode handles the 0.6.0 content.
 
 See [PORT_STATUS.md](PORT_STATUS.md) for validation results.
 
