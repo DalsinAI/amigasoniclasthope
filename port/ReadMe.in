@@ -73,8 +73,10 @@ exactly as released:
   compiler  @ENGINE_COMPILER@
 
 No separate engine install is needed: StartGame runs this copy. The engine
-keeps its settings, logfile.txt and the game's compatibility pack in
-Engine/ (Engine/.userdata). Licences/SOURCE.txt says where its source is.
+keeps its settings (surge.prefs), logfile.txt and the game's compatibility
+pack in the Game drawer when the game was installed from your download, or
+in Engine/.userdata with a game.zip. Licences/SOURCE.txt says where its
+source is.
 
 Starting and playing
 --------------------
