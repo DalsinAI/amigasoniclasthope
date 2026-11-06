@@ -28,3 +28,12 @@ palette, terrain, background, water, HUD and sprites all remain present.
 - [x] Clean quit: in-game quit dialog, then the window's close gadget at the title; logfile ends "tchau!"
 
 AmigaOS cannot unpack RAR, so the player unpacks it first (UnRAR from Aminet, or on another computer) and gives the Installer the folder; the game.zip route from prepare-amiga-port.sh is the other way in. The Installer ran unattended in the lab (requesters replaced by fixed answers in a lab-only copy).
+
+## Standalone RC2 (6 November 2026): SHA-256 check in the Installer
+
+- [x] Tools/SHA256 (port/sha256, built by scripts/build-sha256.sh with os32-gcc16-open6; 6612 bytes, same bytes on every build) in the drawer, Licences/SHA256.txt beside the other licences
+- [x] Lab t4-opensurge: Tools/SHA256 gives OK/0 for the right hash, FAILED/10 for a wrong one, 20 for a missing file; inside an Installer script `(run ... (safe))` returns those codes
+- [x] All three downloads (AS2R zip, Aishi & Reimu zip, Sonic The Last Hope.rar) check OK on the Amiga, 18-25 s each in the lab
+- [x] Installer texts kept under 512 characters per literal: Installer 47.19 refused Install-SonicTLH's longer first message ("Symbol or String too long")
+- [x] Install-SonicTLH run by hand from its icon (every requester clicked): RAR intro message, folder SYS:Games/Downloads/Sonic The Last Hope, "Check the archive", Sonic The Last Hope.rar chosen in the file requester, "The SHA-256 of ... matches", game copied to Work:Games/SonicTLH/Game, MenuButtonList patched to "private", "awake", "entity", surge.cfg added, "Sonic The Last Hope standalone-rc2 is installed"
+- The unpacked folder itself is checked by three file sizes only; the RAR archive is checked by SHA-256 when the player still has it, and the Installer says so
