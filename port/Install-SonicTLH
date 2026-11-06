@@ -1,10 +1,10 @@
-; $VER: Install-SonicTLH standalone-rc1 (5.11.2026)
+; $VER: Install-SonicTLH standalone-rc2 (6.11.2026)
 ; The Amiga Installer script for Sonic The Last Hope, an AmiCradle game port.
 ; Made by amicradle scripts/port_installer.py: change the spec, not this file.
 ; Run it from its icon, beside the SonicTLH drawer where the archive was unpacked.
 
 (set @app-name "Sonic The Last Hope")
-(set #version "standalone-rc1")
+(set #version "standalone-rc2")
 (set #drawer "SonicTLH")
 (set #program "StartGame")
 (set #space 292969)  ; KB
@@ -30,7 +30,7 @@
 (if (<> (exists (tackon #from #program) (noreq)) 1)
     (abort "The SonicTLH drawer has no StartGame in it. Unpack the whole archive again."))
 
-(welcome "This installs Sonic The Last Hope standalone-rc1 for AmigaOS 3.2 on a 68040, 68060 or 68080 with an FPU.")
+(welcome "This installs Sonic The Last Hope standalone-rc2 for AmigaOS 3.2 on a 68040, 68060 or 68080 with an FPU.")
 
 ; where: the parent drawer
 (set #default
@@ -112,11 +112,15 @@
 (set #game (tackon #dest "Game"))
 (set #gamezip (tackon #dest "game.zip"))
 (set #have (or (= (exists (tackon #game "languages") (noreq)) 2) (= (exists #gamezip (noreq)) 1)))
-(message "Sonic The Last Hope's own files are not part of this archive and are not given out with it. Download the game yourself from its page:\n\nhttps://sonicfangameshq.com/forums/showcase/sonic-the-last-hope.1543/\n\nThe file there is called Sonic The Last Hope.rar (77299133 bytes; SHA-256 eb0daac18a3762218dedad340528fb2ac7cf70548de1ac109bd78dda2d3bd391).")
+(set #sha256 "eb0daac18a3762218dedad340528fb2ac7cf70548de1ac109bd78dda2d3bd391")
+; Tools/SHA256 (port/sha256 in the port's repository) checks the download's SHA-256
+(set #checker (tackon #from "Tools/SHA256"))
+(set #can-check (= (exists #checker (noreq)) 1))
+(message (cat "Sonic The Last Hope's own files are not part of this archive and are not given out with it. Download the game yourself from its page:\n\nhttps://sonicfangameshq.com/forums/showcase/sonic-the-last-hope.1543/\n\nThe file there is called Sonic " "The Last Hope.rar (77299133 bytes; SHA-256 eb0daac18a3762218dedad340528fb2ac7cf70548de1ac109bd78dda2d3bd391).\n\nIt is a RAR archive, which AmigaOS cannot unpack: unpack it first and give the Installer the folder. The folder is checked by " "the sizes of some of its files; if you still have the archive, the Installer can check its SHA-256 as well."))
 (set #how
     (askchoice
         (prompt "Where are Sonic The Last Hope's own files, from Sonic The Last Hope.rar?")
-        (help "The Installer copies the game's files into the Game drawer inside SonicTLH, beside the OpenSurge engine that comes with this archive. The archive is a RAR archive, which AmigaOS cannot unpack by itself: unpack it with UnRAR (Aminet) or on another computer, copy the Sonic The Last Hope folder to the Amiga, and choose that folder. prepare-amiga-port.sh (in the port's repository) makes a game.zip on another computer from the same download. Keep: leaves what an earlier run installed.")
+        (help (cat "The Installer copies the game's files into the Game drawer inside SonicTLH, beside the OpenSurge engine that comes with this archive. The archive is a RAR archive, which AmigaOS cannot unpack by itself: unpack it with UnRAR (Aminet) or on " "another computer, copy the Sonic The Last Hope folder to the Amiga, and choose that folder. prepare-amiga-port.sh (in the port's repository) makes a game.zip on another computer from the same download. Keep: leaves what an earlier run " "installed."))
         (choices "The folder I unpacked it into (called Sonic The Last Hope)" "A game.zip made by prepare-amiga-port.sh" "Keep the game files already installed")
         (default (if #have 2 0))))
 (if (and (= #how 2) (not #have))
@@ -133,6 +137,31 @@
             (set #src (tackon #src #root)))
         (if (<> (fileonly #src) #root)
             (abort (cat #src " is not the Sonic The Last Hope folder. Choose the folder that unpacking Sonic The Last Hope.rar made.")))
+        (if #can-check
+            (if
+                (askbool
+                    (prompt "The folder's files are checked by their sizes, which finds a folder that is incomplete or from another version. Do you still have Sonic The Last Hope.rar? If you do, the Installer can check its SHA-256 as well.")
+                    (help (cat "Tools/SHA256 (in this archive) reads Sonic The Last Hope.rar and compares its SHA-256 with eb0daac18a3762218dedad340528fb2ac7cf70548de1ac109bd78dda2d3bd391, the one of the download this port was made for. The Amiga cannot unpack the RAR " "archive itself, so the game's files are always copied from the folder; the archive is only checked. If you no longer have the archive, choose Sizes only: the folder is then checked by the sizes of a few of its files, not by a SHA-256."))
+                    (choices "Check the archive" "Sizes only")
+                    (default 1))
+                (
+                    (set #arc
+                        (askfile
+                            (prompt "Choose Sonic The Last Hope.rar, as you downloaded it.")
+                            (help @askfile-help)
+                            (default "RAM:")))
+                    (if (<> (exists #arc (noreq)) 1)
+                        (abort (cat "There is no file " #arc ".")))
+                    (if (<> (getsize #arc) #archive-size)
+                        (abort (cat #arc " is " (getsize #arc) " bytes, not the 77299133 of Sonic The Last Hope.rar. Download it again from https://sonicfangameshq.com/forums/showcase/sonic-the-last-hope.1543/")))
+                    (working "Checking the SHA-256 of Sonic The Last Hope.rar. On a 68040 this takes a few minutes.")
+                    (set #sha-rc (run (cat "\"" #checker "\" \"" #arc "\" EXPECT=" #sha256 " >NIL:") (safe)))
+                    (if (<> #sha-rc 0)
+                        (abort (cat #arc " is not the Sonic The Last Hope.rar this port was made for: its SHA-256 is not " #sha256 ". It was damaged in the download or is another version. Download it again from https://sonicfangameshq.com/forums/showcase/sonic-the-last-hope.1543/")))
+                    (message (cat "The SHA-256 of " #arc " matches:" "\n\n" #sha256))
+                )
+            )
+        )
     )
 )
 (if (<> #src "")
@@ -205,7 +234,7 @@
 (complete 100)
 (if @pretend
     (message (cat "Pretend: nothing was copied or changed. Sonic The Last Hope would have gone in " #dest "."))
-    (message (cat "Sonic The Last Hope standalone-rc1 is installed in " #dest "."
+    (message (cat "Sonic The Last Hope standalone-rc2 is installed in " #dest "."
                   "\n\nTo start it, open the SonicTLH drawer and double-click the StartGame icon."
                   (if (= #kept "") "" (cat "\n\nLeft as they were: " #kept ".")))))
 (exit (quiet))
