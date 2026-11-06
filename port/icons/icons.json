@@ -1,0 +1,24 @@
+{
+  "about": "The Workbench icons of the SonicTLH drawer: python3 tools/make_installer.py AMICRADLE writes them with DalsinAI/amicradle scripts/port_icons.py. The badge is the Open Surge Engine's own icon (amigaopensurge src/misc/opensurge.png), not the game's art, which this repository does not carry.",
+  "drawer": {
+    "name": "SonicTLH"
+  },
+  "badge": "art/badge.png",
+  "icons": [
+    {
+      "file": "StartGame.info",
+      "kind": "tool",
+      "type": "project",
+      "defaultTool": "C:IconX",
+      "stack": 262144,
+      "toolTypes": [
+        "WINDOW=CON:40/40/560/140/SonicTLH/AUTO/CLOSE/WAIT",
+        "DELAY=0"
+      ]
+    },
+    {
+      "file": "ReadMe.info",
+      "kind": "readme"
+    }
+  ]
+}

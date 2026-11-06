@@ -1,0 +1,56 @@
+{
+  "name": "Sonic The Last Hope",
+  "version": "standalone-rc1",
+  "drawer": "SonicTLH",
+  "program": "StartGame",
+  "cpu": "68040",
+  "fpu": true,
+  "space": 300000000,
+  "modules": [
+    "GL.module",
+    "SDL2.module"
+  ],
+  "keep": [
+    "Game",
+    "game.zip"
+  ],
+  "parent": "Work:Games",
+  "badge": "icons/art/badge.png",
+  "data": {
+    "root": "Sonic The Last Hope",
+    "archive": "Sonic The Last Hope.rar",
+    "archive_size": 77299133,
+    "sha256": "eb0daac18a3762218dedad340528fb2ac7cf70548de1ac109bd78dda2d3bd391",
+    "page": "https://sonicfangameshq.com/forums/showcase/sonic-the-last-hope.1543/",
+    "unzip": false,
+    "patch_menu": true,
+    "surge_cfg": true,
+    "exclude": [
+      "#?.exe",
+      "#?.dll",
+      "src",
+      "screenshots",
+      "logfile.txt",
+      "allegro.log",
+      "surge.prefs",
+      "CMakeLists.txt",
+      "CHANGES.md",
+      "CONTRIBUTING.md",
+      "README.md"
+    ],
+    "checks": [
+      [
+        "scripts/ui/menubuttonlist.ss",
+        6940
+      ],
+      [
+        "levels/base1.lev",
+        67138
+      ],
+      [
+        "musics/neonice.ogg",
+        5541866
+      ]
+    ]
+  }
+}

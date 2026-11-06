@@ -1,3 +1,32 @@
-; Launch through the single shared Amiga OpenSurge installation.
-DH1:OpenSurgeRC1/opensurge --game DH1:SonicTLH/game.zip
-
+; $VER: StartGame standalone-rc1 (5.11.2026)
+; Start Sonic The Last Hope with the OpenSurge engine in this drawer (SonicTLH/Engine).
+; From Workbench: double-click the StartGame icon (IconX starts it here).
+; From a Shell: CD to the SonicTLH drawer first, then: Execute StartGame
+FailAt 21
+IF NOT EXISTS Engine/opensurge
+  Echo "StartGame: Engine/opensurge is not in the current drawer."
+  Echo "CD to the SonicTLH drawer first, or start the game from its icon."
+  Quit 20
+ENDIF
+; The game's own files: Game (copied by Install-SonicTLH from your own
+; download) or game.zip (made by prepare-amiga-port.sh on another computer).
+IF EXISTS game.zip
+  Set osgame game.zip
+ELSE
+  IF EXISTS Game/languages
+    Set osgame Game
+  ELSE
+    Echo "Sonic The Last Hope's own files are not installed yet."
+    Echo "Run Install-SonicTLH and give it the game you downloaded (see ReadMe)."
+    Quit 10
+  ENDIF
+ENDIF
+Stack 262144
+; the engine finds its files from the path it is started by, and names its
+; settings drawer after the game's: give it this drawer's full path
+Set osdir `CD`
+CD Engine
+"$osdir/Engine/opensurge" --game "$osdir/$osgame"
+CD "$osdir"
+Unset osgame
+Unset osdir

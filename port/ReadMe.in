@@ -1,0 +1,96 @@
+Sonic The Last Hope for AmigaOS 3 - @RELEASE_VERSION@
+==================================================
+
+The Amiga OpenSurge engine, ready to play Sonic The Last Hope,
+a fan game made with the Open Surge Engine. No separate engine install is
+needed.
+
+THIS ARCHIVE HAS NONE OF THE GAME'S OWN FILES. Its makers have not said
+they may be passed on, so they are not. Download the game yourself, from
+its page:
+
+  https://sonicfangameshq.com/forums/showcase/sonic-the-last-hope.1543/
+
+  file     Sonic The Last Hope.rar
+  size     77299133 bytes
+  sha256   eb0daac18a3762218dedad340528fb2ac7cf70548de1ac109bd78dda2d3bd391
+
+The game, its characters and its music belong to their makers and owners;
+it is not made by or for SEGA.
+
+Installing
+----------
+Double-click Install-SonicTLH beside the SonicTLH drawer. It checks the CPU,
+FPU and GFOpenGPU, asks where the SonicTLH drawer should go (Work:Games is
+offered), copies the engine there, and then asks for the game you
+downloaded:
+
+- Sonic The Last Hope.rar is a RAR archive, which AmigaOS cannot unpack by
+  itself: unpack it with an UnRAR from Aminet (util/arc) or on another
+  computer
+  (7-Zip), copy the "Sonic The Last Hope" folder to the Amiga
+  and choose that folder;
+- or the folder "Sonic The Last Hope" that unpacking it made;
+- or a game.zip made from the download on another computer with the port's
+  scripts/prepare-amiga-port.sh.
+
+It checks the folder's name and the sizes of a few of its files, then
+copies the game's files into SonicTLH/Game, leaving out the Windows program
+files. It then updates the menu script for OpenSurge 0.6.1 with
+Tools/PatchMenu.rexx (ARexx; RexxMast is started if it is not running) and
+adds Tools/surge.cfg. Running Install-SonicTLH again replaces or keeps
+those files.
+
+A computer with a shell can check the download's SHA-256 first:
+  sha256sum "Sonic The Last Hope.rar"
+
+What is in the drawer
+---------------------
+StartGame   starts the game (once its files are installed)
+Engine/     the OpenSurge engine (below)
+Game/       the game's own files, from your download (Install-SonicTLH)
+Tools/      what Install-SonicTLH uses
+Licences/   licences and the engine's source
+
+What it needs
+-------------
+- AmigaOS 3.2 (Installer 43.3 or newer for Install-SonicTLH)
+- a 68040 or 68060 with an FPU
+- GFOpenGPU: LIBS:GFOpenGPU/GL.module and SDL2.module (as on AmiCradle)
+- about 300 MB free on the hard disk, and plenty of Fast RAM
+
+The engine
+----------
+Engine/ is Amiga OpenSurge, Open Surge Engine 0.6.1.3 for AmigaOS 3,
+exactly as released:
+
+  release   @ENGINE_REPO@ @ENGINE_TAG@
+  commit    @ENGINE_COMMIT@
+  archive   @ENGINE_ASSET@
+  sha256    @ENGINE_SHA256@
+  program   Engine/opensurge
+  sha256    @ENGINE_BINARY_SHA256@
+  compiler  @ENGINE_COMPILER@
+
+No separate engine install is needed: StartGame runs this copy. The engine
+keeps its settings (surge.prefs), logfile.txt and the game's compatibility
+pack in the Game drawer when the game was installed from your download, or
+in Engine/.userdata with a game.zip. Licences/SOURCE.txt says where its
+source is.
+
+Starting and playing
+--------------------
+Double-click StartGame in the SonicTLH drawer. From a Shell, CD to the
+drawer first, then Execute StartGame. F10 switches between a window and
+the full screen. Leave the game from its own menu (Esc brings it up in
+most games).
+
+Licences
+--------
+Licences/GPL-3.0.txt   the engine (GNU GPL 3 or later)
+Licences/SOURCE.txt    where the engine's source is, at the exact commit
+Licences/Port-scripts-MIT.txt  StartGame, the Installer script, Tools/
+Engine/licenses/       the engine's own art, sound and font licences
+
+The port's repository: https://github.com/DalsinAI/amigasoniclasthope
+(port commit @PORT_COMMIT@)
