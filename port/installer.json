@@ -1,6 +1,6 @@
 {
   "name": "Sonic The Last Hope",
-  "version": "standalone-rc1",
+  "version": "standalone-rc2",
   "drawer": "SonicTLH",
   "program": "StartGame",
   "cpu": "68040",
