@@ -41,7 +41,17 @@ Tools/PatchMenu.rexx (ARexx; RexxMast is started if it is not running) and
 adds Tools/surge.cfg. Running Install-SonicTLH again replaces or keeps
 those files.
 
-A computer with a shell can check the download's SHA-256 first:
+The Installer can check the download's SHA-256 on the Amiga with
+Tools/SHA256, which comes in this archive. As the RAR archive cannot be
+unpacked by AmigaOS, the Installer always copies the game from the
+folder: it asks whether you still have "Sonic The Last Hope.rar", and if you
+do it checks the archive's SHA-256 (a few minutes on a 68040). If you
+no longer have it, the folder is checked by the sizes of a few of its
+files only, not by a SHA-256.
+
+The same check from a Shell, in the SonicTLH drawer:
+  Tools/SHA256 "Sonic The Last Hope.rar" EXPECT=<SHA-256 above>
+or on another computer:
   sha256sum "Sonic The Last Hope.rar"
 
 What is in the drawer
@@ -49,7 +59,7 @@ What is in the drawer
 StartGame   starts the game (once its files are installed)
 Engine/     the OpenSurge engine (below)
 Game/       the game's own files, from your download (Install-SonicTLH)
-Tools/      what Install-SonicTLH uses
+Tools/      what Install-SonicTLH uses (SHA256 checks the download)
 Licences/   licences and the engine's source
 
 What it needs
@@ -90,6 +100,7 @@ Licences
 Licences/GPL-3.0.txt   the engine (GNU GPL 3 or later)
 Licences/SOURCE.txt    where the engine's source is, at the exact commit
 Licences/Port-scripts-MIT.txt  StartGame, the Installer script, Tools/
+Licences/SHA256.txt    Tools/SHA256 (MIT, AmiCradle Team)
 Engine/licenses/       the engine's own art, sound and font licences
 
 The port's repository: https://github.com/DalsinAI/amigasoniclasthope
