@@ -116,11 +116,11 @@
 ; Tools/SHA256 (port/sha256 in the port's repository) checks the download's SHA-256
 (set #checker (tackon #from "Tools/SHA256"))
 (set #can-check (= (exists #checker (noreq)) 1))
-(message "Sonic The Last Hope's own files are not part of this archive and are not given out with it. Download the game yourself from its page:\n\nhttps://sonicfangameshq.com/forums/showcase/sonic-the-last-hope.1543/\n\nThe file there is called Sonic The Last Hope.rar (77299133 bytes; SHA-256 eb0daac18a3762218dedad340528fb2ac7cf70548de1ac109bd78dda2d3bd391).\n\nIt is a RAR archive, which AmigaOS cannot unpack: unpack it first and give the Installer the folder. The folder is checked by the sizes of some of its files; if you still have the archive, the Installer can check its SHA-256 as well.")
+(message (cat "Sonic The Last Hope's own files are not part of this archive and are not given out with it. Download the game yourself from its page:\n\nhttps://sonicfangameshq.com/forums/showcase/sonic-the-last-hope.1543/\n\nThe file there is called Sonic " "The Last Hope.rar (77299133 bytes; SHA-256 eb0daac18a3762218dedad340528fb2ac7cf70548de1ac109bd78dda2d3bd391).\n\nIt is a RAR archive, which AmigaOS cannot unpack: unpack it first and give the Installer the folder. The folder is checked by " "the sizes of some of its files; if you still have the archive, the Installer can check its SHA-256 as well."))
 (set #how
     (askchoice
         (prompt "Where are Sonic The Last Hope's own files, from Sonic The Last Hope.rar?")
-        (help "The Installer copies the game's files into the Game drawer inside SonicTLH, beside the OpenSurge engine that comes with this archive. The archive is a RAR archive, which AmigaOS cannot unpack by itself: unpack it with UnRAR (Aminet) or on another computer, copy the Sonic The Last Hope folder to the Amiga, and choose that folder. prepare-amiga-port.sh (in the port's repository) makes a game.zip on another computer from the same download. Keep: leaves what an earlier run installed.")
+        (help (cat "The Installer copies the game's files into the Game drawer inside SonicTLH, beside the OpenSurge engine that comes with this archive. The archive is a RAR archive, which AmigaOS cannot unpack by itself: unpack it with UnRAR (Aminet) or on " "another computer, copy the Sonic The Last Hope folder to the Amiga, and choose that folder. prepare-amiga-port.sh (in the port's repository) makes a game.zip on another computer from the same download. Keep: leaves what an earlier run " "installed."))
         (choices "The folder I unpacked it into (called Sonic The Last Hope)" "A game.zip made by prepare-amiga-port.sh" "Keep the game files already installed")
         (default (if #have 2 0))))
 (if (and (= #how 2) (not #have))
@@ -141,7 +141,7 @@
             (if
                 (askbool
                     (prompt "The folder's files are checked by their sizes, which finds a folder that is incomplete or from another version. Do you still have Sonic The Last Hope.rar? If you do, the Installer can check its SHA-256 as well.")
-                    (help "Tools/SHA256 (in this archive) reads Sonic The Last Hope.rar and compares its SHA-256 with eb0daac18a3762218dedad340528fb2ac7cf70548de1ac109bd78dda2d3bd391, the one of the download this port was made for. The Amiga cannot unpack the RAR archive itself, so the game's files are always copied from the folder; the archive is only checked. If you no longer have the archive, choose Sizes only: the folder is then checked by the sizes of a few of its files, not by a SHA-256.")
+                    (help (cat "Tools/SHA256 (in this archive) reads Sonic The Last Hope.rar and compares its SHA-256 with eb0daac18a3762218dedad340528fb2ac7cf70548de1ac109bd78dda2d3bd391, the one of the download this port was made for. The Amiga cannot unpack the RAR " "archive itself, so the game's files are always copied from the folder; the archive is only checked. If you no longer have the archive, choose Sizes only: the folder is then checked by the sizes of a few of its files, not by a SHA-256."))
                     (choices "Check the archive" "Sizes only")
                     (default 1))
                 (
