@@ -1,9 +1,9 @@
 {
-  "about": "The Workbench icons of the SonicTLH drawer: python3 tools/make_installer.py AMICRADLE writes them with DalsinAI/amicradle scripts/port_icons.py. The badge is the Open Surge Engine's own icon (amigaopensurge src/misc/opensurge.png), not the game's art, which this repository does not carry.",
+  "about": "The Workbench icons of the SonicTLH drawer: python3 tools/make_installer.py AMICRADLE writes them with DalsinAI/amicradle scripts/port_icons.py. The art (art/soniclasthope.svg, drawn as an OS 3.5 GlowIcon: shaped, shaded, see-through round the edges) is The AmiCradle Team's own, under the same terms as the other Amiga files; art/soniclasthope.png is it rendered at 128 x 128. The badge is the Open Surge Engine's own icon (amigaopensurge src/misc/opensurge.png), not the game's art, which this repository does not carry.",
   "drawer": {
     "name": "SonicTLH"
   },
-  "badge": "art/badge.png",
+  "badge": "art/soniclasthope.png",
   "icons": [
     {
       "file": "StartGame.info",
